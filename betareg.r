@@ -4,6 +4,10 @@ kill <- function(d) (d$dead / (d$dead + d$live)) - (d$sdea / (d$sdea + d$sliv))
 
 meap <- function(p, d, b, t) mean(p[d[[t]] == b]) - mean(p[d[[t]] != b])
 
+gsam <- function(d, u) d[d$id %in% sample(u, replace=T),]
+
+isam <- function(d, u) d[sample(1:nrow(d), replace=T),]
+
 read <- function(fil) {
     dat <- na.omit(read.csv(paste0("dat/", fil, ".csv")))
     dat$day <- as.factor(dat$day)
@@ -12,11 +16,11 @@ read <- function(fil) {
     dat
 }
 
-boot <- function(dat, bas, type, fml, b, q) {
+boot <- function(dat, sam, bas, type, fml, b, q) {
     p <- numeric(b)
     u <- unique(dat$id)
     for (i in 1:b) {
-        d <- dat[dat$id %in% sample(u, replace=T),]
+        d <- sam(dat, u)
         m <- betareg(fml, data=d)
         r <- predict(m)
         p[i] <- meap(r, d, bas, type)
@@ -24,13 +28,13 @@ boot <- function(dat, bas, type, fml, b, q) {
     quantile(p, c((1-q)/2, 1-(1-q)/2))
 }
 
-run <- function(fil, bas, type="type", fml=kill~type+id, b=1000, q=0.95) {
+run <- function(fil, bas, type="type", fml=kill~type+id, sam=gsam, b=1000, q=0.95) {
     dat <- read(fil)
     mod <- betareg(fml, data=dat)
     sry <- summary(mod)
     prd <- predict(mod)
     mea <- meap(prd, dat, bas, type)
-    bot <- boot(dat, bas, type, fml, b, q)
+    bot <- boot(dat, sam, bas, type, fml, b, q)
     list(sry=sry, mea=mea, bot=bot)
 }
 
