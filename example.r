@@ -1,19 +1,15 @@
 library(broom)
 library(MKinfer)
 library(betareg)
+source("data.r")
 
-kill <- function(d) (d$dead / (d$dead + d$live)) - (d$sdea / (d$sdea + d$sliv))
-
-dat <- read.csv("dat/4c.csv")
-dat$type <- as.factor(dat$type)
-dat$id <- as.factor(dat$id)
-dat$kill <- kill(dat)
-
+dat <- read("4c")
 hig <- dat[dat$type == "high",]
 low <- dat[dat$type == "low",]
 
 tst <- t.test(hig$kill, low$kill, paired=T)
-bot <- boot.t.test(hig$kill, low$kill, paired=T)
+bot <- boot.t.test(hig$kill, low$kill, paired=T, R=1e8)
+non <- wilcox.test(hig$kill, low$kill, paired=T)
 
 lin <- lm(kill ~ type + id, dat)
 bet <- betareg(kill ~ type + id, dat)

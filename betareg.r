@@ -1,6 +1,5 @@
 library(betareg)
-
-kill <- function(d) (d$dead / (d$dead + d$live)) - (d$sdea / (d$sdea + d$sliv))
+source("data.r")
 
 meap <- function(p, d, b, t) mean(p[d[[t]] == b]) - mean(p[d[[t]] != b])
 
@@ -11,14 +10,6 @@ isam <- function(d, u) {
     a <- d[d$day == l[1],]
     b <- d[d$day != l[1],]
     rbind(a[sample(1:nrow(a), replace=T),], b[sample(1:nrow(b), replace=T),])
-}
-
-read <- function(fil) {
-    dat <- na.omit(read.csv(paste0("dat/", fil, ".csv")))
-    dat$day <- as.factor(dat$day)
-    dat$type <- as.factor(dat$type)
-    dat$kill <- kill(dat)
-    dat
 }
 
 boot <- function(dat, sam, bas, type, fml, b, q) {
