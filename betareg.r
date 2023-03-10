@@ -37,14 +37,14 @@ d2c <- read("2c")
 tcv <- d2c[d2c$type == "tcnv",]
 trg <- d2c[d2c$type == "treg",]
 
-run(read("2b_a"), "tcnv") # 4.56e-8 0.048 (0.026, 0.069)
-run(read("2b_b"), "tcnv") #   0.058 0.019 (-0.002, 0.041)
+run(read("2b_a"), "tcnv")
+run(read("2b_b"), "tcnv")
 
-run(d2c, "tcnv") # 0.439 0.007 (-0.012, 0.027)
-run(tcv, 2.5, type="day", fml=kill~day, sam=isam) # 3.6e-10 -0.094 (-0.114, -0.071)
-run(trg, 2.5, type="day", fml=kill~day, sam=isam) # 0.375   -0.012 (-0.039, 0.013)
+run(d2c, "tcnv")
+run(tcv, 2.5, type="day", fml=kill~day, sam=isam)
+run(trg, 2.5, type="day", fml=kill~day, sam=isam)
 
-run(read("4c"), "high") # <2e-16 0.080 (0.066, 0.095)
-run(read("4d"), "high") # <2e-16 0.071 (0.048, 0.092)
-run(read("4e"), "high") #  0.011 0.028 (0.005, 0.052)
-run(read("4f"), "high") #  0.053 0.015 (-0.004, 0.034)
+run(read("4c"), "high")
+run(read("4d"), "high")
+run(read("4e"), "high")
+run(read("4f"), "high")
