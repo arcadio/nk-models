@@ -17,6 +17,7 @@ dotplot <- function(id, dat, err, ylim=NULL) {
     p <- ggplot(data=dat, mapping=aes(x=type, y=kill)) +
         geom_line(aes(group=id), alpha=0.1) +
         geom_point(size=3, aes(color=type, shape=day), alpha=0.9) +
+        scale_shape_manual(values=c(15, 17)) +
         stat_halfeye(data=err, aes(fill=type), alpha=0.5) +
         coord_cartesian(ylim=ylim) +
         labs(x="", y="Kill rate") +
