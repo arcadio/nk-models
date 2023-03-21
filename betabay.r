@@ -22,6 +22,24 @@ run <- function(dat, bas, prd=T, var="type", fml=kill~type+id) {
     list(fit=fit, dif=dif, gm1=gm1, gm2=gm2, fld=fld, fry=fry, fsr=fsr)
 }
 
+rnc <- function(dat, bas, var="type", fml=kill~type+id) {
+    fit <- stan_betareg(fml, dat, link="logit", link.phi="log", iter=5e3, seed=42)
+    pst <- posterior_epred(fit)
+    gm1 <- rowMeans(pst[,dat[[var]]==bas])
+    gm2 <- rowMeans(pst[,dat[[var]]!=bas])
+    oth <- setdiff(attr(terms(fml), which="term.labels"), var)
+    cvr <- data.frame(levels(dat[[var]]))
+    colnames(cvr) <- var
+    cnt <- merge(subset(dat, select=oth), cvr)
+    prd <- posterior_epred(fit, cnt)
+    dif <- rowMeans(prd[,cnt[[var]]==bas] - prd[,cnt[[var]]!=bas])
+    fld <- rowMeans(prd[,cnt[[var]]==bas] / prd[,cnt[[var]]!=bas])
+    dry <- summary(dif)
+    fry <- summary(fld)
+    fsr <- ifelse(dry[3] > 0, mean(dif < 0), mean(dif > 0))
+    list(fit=fit, dif=dif, gm1=gm1, gm2=gm2, fld=fld, fry=fry, fsr=fsr)
+}
+
 smr <- function(res) {
     pnt <- c(0.025, 0.5, 0.975)
     c(res$fsr, quantile(res$fld, pnt), quantile(res$gm1, pnt), quantile(res$gm2, pnt))
@@ -56,3 +74,5 @@ rownames(res) <- c("2b(a)", "2b(b)",
                    "2c(tcnv)", "2c(treg)", "2c(all)",
                    "4c", "4d", "4e", "4f")
 write.csv(res, file="tmp/res.csv")
+
+source("plot.r")
