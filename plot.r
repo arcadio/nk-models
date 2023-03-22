@@ -20,7 +20,7 @@ dotplot <- function(id, dat, err, ylim=NULL) {
         scale_shape_manual(values=c(15, 17)) +
         stat_halfeye(data=err, aes(fill=type), alpha=0.5, .width=c(0.025, 0.975)) +
         coord_cartesian(ylim=ylim) +
-        labs(x="", y="Kill rate") +
+        labs(x="", y="Specific kill rate") +
         guides(color="none", fill="none")
     ggsave(paste0("tmp/dot", id, ".pdf"), p)
 }
@@ -34,7 +34,7 @@ pstplot("2c",
         rbind(data.frame(fld=dca$fld, exp="tconv"),
               data.frame(fld=dcb$fld, exp="treg"),
               data.frame(fld=dcc$fld, exp="all")),
-        c(0.25, 2))
+        c(0.25, 4))
 
 pstplot("4",
         rbind(data.frame(fld=d4c$fld, exp="4c"),

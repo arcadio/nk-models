@@ -60,8 +60,8 @@ trg <- d2c[d2c$type == "treg",]
 dba <- run(read("2b_a"), "tcnv")
 dbb <- run(read("2b_b"), "tcnv")
 
-dca <- run(tcv, 2.5, prd=F, var="day", fml=kill~day)
-dcb <- run(trg, 2.5, prd=F, var="day", fml=kill~day)
+dca <- run(tcv, 3.5, prd=F, var="day", fml=kill~day)
+dcb <- run(trg, 3.5, prd=F, var="day", fml=kill~day)
 dcc <- run(d2c, "tcnv")
 
 d4c <- run(read("4c"), "high")
