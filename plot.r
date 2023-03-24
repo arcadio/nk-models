@@ -1,7 +1,7 @@
 library(ggplot2)
 library(ggdist)
 
-theme_set(theme_classic(base_size=18))
+theme_set(theme_classic(base_size=18) + theme(plot.title=element_text(hjust=0.5)))
 
 mft <- function() function(x) format(100*x, digits=2)
 
@@ -15,7 +15,7 @@ pstplot <- function(id, dat, xlim=NULL) {
     ggsave(paste0("tmp/fold", id, ".pdf"), p)
 }
 
-dotplot <- function(id, dat, err, lab, ylim=NULL) {
+dotplot <- function(id, dat, err, tit, lab, ylim=NULL) {
     p <- ggplot(data=dat, mapping=aes(x=type, y=kill)) +
         geom_line(aes(group=id), alpha=0.1) +
         geom_point(size=3, aes(color=type, shape=day), alpha=0.9) +
@@ -24,7 +24,7 @@ dotplot <- function(id, dat, err, lab, ylim=NULL) {
         scale_x_discrete(labels=lab) +
         scale_y_continuous(labels=mft()) +
         coord_cartesian(ylim=ylim) +
-        labs(x="", y="Specific kill (%)") +
+        labs(x="", y="Specific killing (%)", title=tit) +
         guides(color="none", fill="none", shape=guide_legend(title="Day"))
     ggsave(paste0("tmp/dot", id, ".pdf"), p)
 }
@@ -53,6 +53,7 @@ dotplot("2b_a",
         read("2b_a"),
         rbind(data.frame(type="tcnv", kill=dba$gm1),
               data.frame(type="treg", kill=dba$gm2)),
+        expression("CD56"^"br"),
         c("Tconv", "Treg"),
         c(0, 0.5))
 
@@ -60,6 +61,7 @@ dotplot("2b_b",
         read("2b_b"),
         rbind(data.frame(type="tcnv", kill=dbb$gm1),
               data.frame(type="treg", kill=dbb$gm2)),
+        expression("CD56"^"dim"),
         c("Tconv", "Treg"),
         c(0, 0.5))
 
@@ -67,12 +69,14 @@ dotplot("2c",
         read("2c"),
         rbind(data.frame(type="tcnv", kill=dcc$gm1),
               data.frame(type="treg", kill=dcc$gm2)),
+        "",
         c("Tconv", "Treg"))
 
 dotplot("4c",
         read("4c"),
         rbind(data.frame(type="high", kill=d4c$gm1),
               data.frame(type="low", kill=d4c$gm2)),
+        expression("CD56"^"br"+"Tconv"),
         lhl,
         c(0, 0.5))
 
@@ -80,6 +84,7 @@ dotplot("4d",
         read("4d"),
         rbind(data.frame(type="high", kill=d4d$gm1),
               data.frame(type="low", kill=d4d$gm2)),
+        expression("CD56"^"br"+"Treg"),
         lhl,
         c(0, 0.5))
 
@@ -87,6 +92,7 @@ dotplot("4e",
         read("4e"),
         rbind(data.frame(type="high", kill=d4e$gm1),
               data.frame(type="low", kill=d4e$gm2)),
+        expression("CD56"^"dim"+"Tconv"),
         lhl,
         c(0, 0.5))
 
@@ -94,5 +100,6 @@ dotplot("4f",
         read("4f"),
         rbind(data.frame(type="high", kill=d4f$gm1),
               data.frame(type="low", kill=d4f$gm2)),
+        expression("CD56"^"dim"+"Treg"),
         lhl,
         c(0, 0.5))
