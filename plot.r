@@ -3,9 +3,11 @@ library(ggdist)
 
 theme_set(theme_classic(base_size=18))
 
+mft <- function() function(x) format(100*x, digits=2)
+
 pstplot <- function(id, dat, xlim=NULL) {
     p <- ggplot(dat, aes(x=fld, y=exp, fill=after_stat(x < 1))) +
-        stat_halfeye(alpha=0.5, .width=c(0.025, 0.975)) +
+        stat_halfeye(alpha=0.5, .width=c(0.025, 0.975), linewidth=4) +
         geom_vline(xintercept=1, linetype="dashed", color="grey") +
         coord_cartesian(xlim=xlim) +
         labs(x="Fold change", y="") +
@@ -18,10 +20,11 @@ dotplot <- function(id, dat, err, ylim=NULL) {
         geom_line(aes(group=id), alpha=0.1) +
         geom_point(size=3, aes(color=type, shape=day), alpha=0.9) +
         scale_shape_manual(values=c(15, 17)) +
-        stat_halfeye(data=err, aes(fill=type), alpha=0.5, .width=c(0.025, 0.975)) +
+        stat_halfeye(data=err, aes(fill=type), alpha=0.5, .width=c(0.025, 0.975), linewidth=4) +
+        scale_y_continuous(labels=mft()) +
         coord_cartesian(ylim=ylim) +
-        labs(x="", y="Specific kill rate") +
-        guides(color="none", fill="none")
+        labs(x="", y="Specific kill (%)") +
+        guides(color="none", fill="none", shape=guide_legend(title="Day"))
     ggsave(paste0("tmp/dot", id, ".pdf"), p)
 }
 
