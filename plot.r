@@ -5,13 +5,13 @@ theme_set(theme_classic(base_size=18) + theme(plot.title=element_text(hjust=0.5)
 
 mft <- function() function(x) format(100*x, digits=2)
 
-pstplot <- function(id, dat, lab, xlim=NULL) {
+pstplot <- function(id, dat, xlab, lab, xlim=NULL) {
     p <- ggplot(dat, aes(x=fld, y=exp, fill=after_stat(x < 1))) +
         stat_halfeye(alpha=0.5, .width=c(0.025, 0.975), linewidth=4) +
         geom_vline(xintercept=1, linetype="dashed", color="grey") +
         coord_cartesian(xlim=xlim) +
         scale_y_discrete(labels=lab) +
-        labs(x="Fold change", y="") +
+        labs(x=xlab, y="") +
         guides(fill="none")
     ggsave(paste0("tmp/fold", id, ".pdf"), p)
 }
@@ -33,6 +33,7 @@ dotplot <- function(id, dat, err, tit, lab, ylim=NULL) {
 pstplot("2b",
         rbind(data.frame(fld=dba$fld, exp="2b(a)"),
               data.frame(fld=dbb$fld, exp="2b(b)")),
+        expression("Kill"["Tconv"] / "Kill"["Treg"]),
         c(expression("CD56"^"br"), expression("CD56"^"dim")),
         c(0.25, 2))
 
@@ -40,6 +41,7 @@ pstplot("2c",
         rbind(data.frame(fld=dca$fld, exp="tconv"),
               data.frame(fld=dcb$fld, exp="treg"),
               data.frame(fld=dcc$fld, exp="all")),
+        expression("Kill"[3.5] / "Kill"[2.5]),
         c("Tconv", "Treg", expression(atop("Tconv" + "", "Treg"))),
         c(0.25, 4))
 
@@ -48,6 +50,7 @@ pstplot("4",
               data.frame(fld=d4d$fld, exp="4d"),
               data.frame(fld=d4e$fld, exp="4e"),
               data.frame(fld=d4f$fld, exp="4f")),
+        expression("Kill"["Prolif"^"high"] / "Kill"["Prolif"^"low"]),
         c(expression(atop("CD56"^"br"  + "", "Tconv")),
           expression(atop("CD56"^"br"  + "", "Treg")),
           expression(atop("CD56"^"dim" + "", "Tconv")),
