@@ -40,7 +40,7 @@ pstplot("2c",
         rbind(data.frame(fld=dca$fld, exp="tconv"),
               data.frame(fld=dcb$fld, exp="treg"),
               data.frame(fld=dcc$fld, exp="all")),
-        c("Tconv", "Treg", expression("Tconv"+"Treg")),
+        c("Tconv", "Treg", expression(atop("Tconv" + "", "Treg"))),
         c(0.25, 4))
 
 pstplot("4",
@@ -48,10 +48,10 @@ pstplot("4",
               data.frame(fld=d4d$fld, exp="4d"),
               data.frame(fld=d4e$fld, exp="4e"),
               data.frame(fld=d4f$fld, exp="4f")),
-        c(expression("CD56"^"br"+"Tconv"),
-          expression("CD56"^"br"+"Treg"),
-          expression("CD56"^"dim"+"Tconv"),
-          expression("CD56"^"dim"+"Treg")),
+        c(expression(atop("CD56"^"br"  + "", "Tconv")),
+          expression(atop("CD56"^"br"  + "", "Treg")),
+          expression(atop("CD56"^"dim" + "", "Tconv")),
+          expression(atop("CD56"^"dim" + "", "Treg"))),
         c(0.25, 2))
 
 lhl <- c(expression("Prolif"^"high"), expression("Prolif"^"low"))
