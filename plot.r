@@ -11,7 +11,7 @@ fldplot <- function(id, dat, xlab, lab, xlim=NULL) {
         geom_vline(xintercept=1, linetype="dashed", color="grey") +
         coord_cartesian(xlim=xlim) +
         scale_y_discrete(labels=lab) +
-        labs(x=xlab, y="") +
+        labs(x=bquote(paste("Fold change ", "(", .(xlab), ")")), y="") +
         guides(fill="none")
     ggsave(paste0("tmp/fold", id, ".pdf"), p)
 }
@@ -33,16 +33,16 @@ dotplot <- function(id, dat, err, tit, lab, ylim=NULL) {
 fldplot("2b",
         rbind(data.frame(fld=dba$fld, exp="2b(a)"),
               data.frame(fld=dbb$fld, exp="2b(b)")),
-        bquote(paste("Fold change ", "(", Kill[Tconv] / Kill[Treg], ")")),
-        c(expression("CD56"^"br"), expression("CD56"^"dim")),
+        bquote(Kill[Tconv] / Kill[Treg]),
+        c(bquote(CD56^br), bquote(CD56^dim)),
         c(0.25, 2))
 
 fldplot("2c",
         rbind(data.frame(fld=dca$fld, exp="tconv"),
               data.frame(fld=dcb$fld, exp="treg"),
               data.frame(fld=dcc$fld, exp="all")),
-        bquote(paste("Fold change ", "(", Kill[3.5] / Kill[2.5], ")")),
-        c("Tconv", "Treg", expression(atop("Tconv" + "", "Treg"))),
+        bquote(Kill[3.5] / Kill[2.5]),
+        c("Tconv", "Treg", bquote(atop(Tconv + "", Treg))),
         c(0.25, 4))
 
 fldplot("4",
@@ -50,20 +50,20 @@ fldplot("4",
               data.frame(fld=d4d$fld, exp="4d"),
               data.frame(fld=d4e$fld, exp="4e"),
               data.frame(fld=d4f$fld, exp="4f")),
-        bquote(paste("Fold change ", "(", Kill[Prolif^high] / Kill[Profif^low], ")")),
-        c(expression(atop("CD56"^"br"  + "", "Tconv")),
-          expression(atop("CD56"^"br"  + "", "Treg")),
-          expression(atop("CD56"^"dim" + "", "Tconv")),
-          expression(atop("CD56"^"dim" + "", "Treg"))),
+        bquote(Kill[Prolif^high] / Kill[Profif^low]),
+        c(bquote(atop(CD56^br  + "", Tconv)),
+          bquote(atop(CD56^br  + "", Treg)),
+          bquote(atop(CD56^dim + "", Tconv)),
+          bquote(atop(CD56^dim + "", Treg))),
         c(0.25, 2))
 
-lhl <- c(expression("Prolif"^"high"), expression("Prolif"^"low"))
+lhl <- c(bquote(Prolif^high), bquote(Prolif^low))
 
 dotplot("2b_a",
         read("2b_a"),
         rbind(data.frame(type="tcnv", kill=dba$gm1),
               data.frame(type="treg", kill=dba$gm2)),
-        expression("CD56"^"br"),
+        bquote(CD56^br),
         c("Tconv", "Treg"),
         c(0, 0.5))
 
@@ -71,7 +71,7 @@ dotplot("2b_b",
         read("2b_b"),
         rbind(data.frame(type="tcnv", kill=dbb$gm1),
               data.frame(type="treg", kill=dbb$gm2)),
-        expression("CD56"^"dim"),
+        bquote(CD56^dim),
         c("Tconv", "Treg"),
         c(0, 0.5))
 
@@ -86,7 +86,7 @@ dotplot("4c",
         read("4c"),
         rbind(data.frame(type="high", kill=d4c$gm1),
               data.frame(type="low", kill=d4c$gm2)),
-        expression("CD56"^"br"+"Tconv"),
+        bquote(CD56^br+Tconv),
         lhl,
         c(0, 0.5))
 
@@ -94,7 +94,7 @@ dotplot("4d",
         read("4d"),
         rbind(data.frame(type="high", kill=d4d$gm1),
               data.frame(type="low", kill=d4d$gm2)),
-        expression("CD56"^"br"+"Treg"),
+        bquote(CD56^br+Treg),
         lhl,
         c(0, 0.5))
 
@@ -102,7 +102,7 @@ dotplot("4e",
         read("4e"),
         rbind(data.frame(type="high", kill=d4e$gm1),
               data.frame(type="low", kill=d4e$gm2)),
-        expression("CD56"^"dim"+"Tconv"),
+        bquote(CD56^dim+Tconv),
         lhl,
         c(0, 0.5))
 
@@ -110,6 +110,6 @@ dotplot("4f",
         read("4f"),
         rbind(data.frame(type="high", kill=d4f$gm1),
               data.frame(type="low", kill=d4f$gm2)),
-        expression("CD56"^"dim"+"Treg"),
+        bquote(CD56^dim+Treg),
         lhl,
         c(0, 0.5))
