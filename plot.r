@@ -33,7 +33,7 @@ dotplot <- function(id, dat, err, tit, lab, ylim=NULL, col=c(180, 300)) {
     ggsave(paste0("tmp/dot", id, ".pdf"), p)
 }
 
-pal <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFEF00")
+pal <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#008080")
 pl1 <- pal[1:2]
 pl2 <- pal[3:4]
 pl3 <- pal[5:6]
