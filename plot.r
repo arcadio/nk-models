@@ -11,7 +11,7 @@ fldplot <- function(id, dat, xlab, lab, xlim=NULL, col=c(180, 300)) {
         geom_vline(xintercept=1, linetype="dashed", color="grey") +
         coord_cartesian(xlim=xlim) +
         scale_y_discrete(labels=lab) +
-        scale_fill_hue(h=col) +
+        scale_fill_manual(values=col) +
         labs(x=bquote(paste("Fold change ", "(", .(xlab), ")")), y="") +
         guides(fill="none")
     ggsave(paste0("tmp/fold", id, ".pdf"), p)
@@ -25,16 +25,18 @@ dotplot <- function(id, dat, err, tit, lab, ylim=NULL, col=c(180, 300)) {
         stat_halfeye(data=err, aes(fill=type), alpha=0.5, .width=c(0.025, 0.975), linewidth=4) +
         scale_x_discrete(labels=lab) +
         scale_y_continuous(labels=mft()) +
-        scale_fill_hue(h=col, aesthetics=c("color", "fill")) +
+        scale_color_manual(values=col) +
+        scale_fill_manual(values=col) +
         coord_cartesian(ylim=ylim) +
         labs(x="", y="Specific killing (%)", title=tit) +
         guides(color="none", fill="none", shape=guide_legend(title="Day"))
     ggsave(paste0("tmp/dot", id, ".pdf"), p)
 }
 
-pl1 <- c(0, 60)
-pl2 <- c(120, 180)
-pl3 <- c(240, 300)
+pal <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFEF00")
+pl1 <- pal[1:2]
+pl2 <- pal[3:4]
+pl3 <- pal[5:6]
 lhl <- c(bquote(Prolif^high), bquote(Prolif^low))
 
 fldplot("2b",
