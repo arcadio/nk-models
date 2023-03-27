@@ -93,7 +93,7 @@ dotplot("2c",
               data.frame(type="treg", kill=dcc$gm2)),
         "",
         c("Tconv", "Treg"),
-        col=pl2)
+        col=pl1)
 
 dotplot("4c",
         read("4c"),
