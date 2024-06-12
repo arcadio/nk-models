@@ -8,7 +8,7 @@ hig <- dat[dat$type == "high",]
 low <- dat[dat$type == "low",]
 
 tst <- t.test(hig$kill, low$kill, paired=T)
-bot <- boot.t.test(hig$kill, low$kill, paired=T, R=1e8)
+bot <- boot.t.test(hig$kill, low$kill, paired=T, R=1e7)
 non <- wilcox.test(hig$kill, low$kill, paired=T)
 
 lin <- lm(kill ~ type + id, dat)
