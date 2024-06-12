@@ -1,5 +1,6 @@
 *
 !.gitignore
+!readme.org
 !flake.*
 !*.sh
 !*.r
