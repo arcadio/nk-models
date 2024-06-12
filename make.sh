@@ -2,6 +2,6 @@
 
 mkdir -p tmp
 
-Rscript example.r
+Rscript hypothesis.r
 Rscript betareg.r
 Rscript betabay.r
