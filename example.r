@@ -1,3 +1,7 @@
+# Hypothesis tests to perform contrasts, often making unrealistic
+# assumptions. Only for demonstration purposes, not used in the
+# manuscript.
+
 library(broom)
 library(MKinfer)
 library(betareg)

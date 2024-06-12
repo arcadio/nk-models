@@ -1,3 +1,5 @@
+# Bayesian beta regression.
+
 library(rstanarm)
 library(purrr)
 source("data.r")

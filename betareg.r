@@ -1,3 +1,6 @@
+# Maximum likelihood beta regression. Only for demonstration purposes,
+# not used in the manuscript.
+
 library(betareg)
 source("data.r")
 

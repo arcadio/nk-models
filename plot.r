@@ -1,3 +1,5 @@
+# Plot posterior distributions.
+
 library(ggplot2)
 library(ggdist)
 

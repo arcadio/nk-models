@@ -1,3 +1,5 @@
+# Auxiliary functions to load data.
+
 kill <- function(d) (d$dead / (d$dead + d$live)) - (d$sdea / (d$sdea + d$sliv))
 
 read <- function(fil) {
