@@ -72,8 +72,7 @@ d4e <- run(read("4e"), "high")
 d4f <- run(read("4f"), "high")
 
 res <- dfm(list(dba, dbb, dca, dcb, dcc, d4c, d4d, d4e, d4f))
-rownames(res) <- c("2b(a)", "2b(b)",
-                   "2c(tcnv)", "2c(treg)", "2c(all)",
+rownames(res) <- c("2b(a)", "2b(b)", "2c(tcnv)", "2c(treg)", "2c(all)",
                    "4c", "4d", "4e", "4f")
 write.csv(res, file="tmp/res.csv")
 
