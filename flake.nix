@@ -9,6 +9,7 @@
       {
         devShell.x86_64-linux = pkgs.mkShell {
           packages = with pkgs; [
+            curl
             (rWrapper.override { packages = with rPackages; [ tidyverse broom ggdist MKinfer betareg rstanarm ]; })
           ];
         };

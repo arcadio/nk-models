@@ -6,12 +6,12 @@ kill proliferating CD4+ T cells, /Discovery Immunology/, 2(1), 2023,
 
 The [[https://nixos.org][Nix package manager]].
 
-Alternatively, R and R packages listed in [[file:flake.nix][flake.nix]]. 
+Alternatively, all packages listed in [[file:flake.nix][flake.nix]].
 
 * Usage
 
 1. Run ~nix develop~. This instantiates an ephemeral environment that
-   contains R and all required R packages.
+   contains all required packages.
 
 2. Run ~bash make.sh~. This downloads processed data and performs
    statistical inference.
