@@ -1,6 +1,6 @@
 # Plot posterior distributions.
 
-library(ggplot2)
+library(tidyverse)
 library(ggdist)
 
 theme_set(theme_classic(base_size=18) + theme(plot.title=element_text(hjust=0.5)))
@@ -36,6 +36,10 @@ dotplot <- function(id, err, tit, lab, ylim=NULL, col=c(180, 300)) {
     ggsave(paste0("tmp/dot", id, ".pdf"), p)
 }
 
+rdf <- function(a, b) tibble(fld=map(a, \(x) x$fld), exp=b) |> unnest(cols=c(fld))
+
+rdk <- function(a, b) tibble(type=a, kill=list(b$gm1, b$gm2)) |> unnest(cols=c(kill))
+
 pal <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#008080")
 pl1 <- pal[1:2]
 pl2 <- pal[3:4]
@@ -43,25 +47,19 @@ pl3 <- pal[5:6]
 lhl <- c(bquote(Prolif^high), bquote(Prolif^low))
 
 fldplot("2b",
-        rbind(data.frame(fld=dba$fld, exp="2b(a)"),
-              data.frame(fld=dbb$fld, exp="2b(b)")),
+        rdf(list(dba, dbb), c("2b(a)", "2b(b)")),
         bquote(Kill[Tconv] / Kill[Treg]),
         c(bquote(CD56^br), bquote(CD56^dim)),
         c(0.25, 2), pl1)
 
 fldplot("2c",
-        rbind(data.frame(fld=dca$fld, exp="tconv"),
-              data.frame(fld=dcb$fld, exp="treg"),
-              data.frame(fld=dcc$fld, exp="all")),
+        rdf(list(dca, dcb, dcc), c("tconv", "treg", "all")),
         bquote(Kill[3.5] / Kill[2.5]),
         c("Tconv", "Treg", bquote(atop(Tconv + "", Treg))),
         c(0.25, 4), pl2)
 
 fldplot("4",
-        rbind(data.frame(fld=d4c$fld, exp="4c"),
-              data.frame(fld=d4d$fld, exp="4d"),
-              data.frame(fld=d4e$fld, exp="4e"),
-              data.frame(fld=d4f$fld, exp="4f")),
+        rdf(list(d4c, d4d, d4e, d4f), c("4c", "4d", "4e", "4f")),
         bquote(Kill[Prolif^high] / Kill[Profif^low]),
         c(bquote(atop(CD56^br  + "", Tconv)),
           bquote(atop(CD56^br  + "", Treg)),
@@ -69,37 +67,18 @@ fldplot("4",
           bquote(atop(CD56^dim + "", Treg))),
         c(0.25, 2), pl3)
 
-dotplot("2b_a",
-        rbind(data.frame(type="tcnv", kill=dba$gm1),
-              data.frame(type="treg", kill=dba$gm2)),
+dotplot("2b_a", rdk(c("tcnv", "treg"), dba),
         bquote(CD56^br), c("Tconv", "Treg"), c(0, 0.5), pl1)
 
-dotplot("2b_b",
-        rbind(data.frame(type="tcnv", kill=dbb$gm1),
-              data.frame(type="treg", kill=dbb$gm2)),
+dotplot("2b_b", rdk(c("tcnv", "treg"), dbb),
         bquote(CD56^dim), c("Tconv", "Treg"), c(0, 0.5), pl1)
 
-dotplot("2c",
-        rbind(data.frame(type="tcnv", kill=dcc$gm1),
-              data.frame(type="treg", kill=dcc$gm2)),
-        "", c("Tconv", "Treg"), col=pl1)
+dotplot("2c", rdk(c("tcnv", "treg"), dcc), "", c("Tconv", "Treg"), col=pl1)
 
-dotplot("4c",
-        rbind(data.frame(type="high", kill=d4c$gm1),
-              data.frame(type="low", kill=d4c$gm2)),
-        bquote(CD56^br+Tconv), lhl, c(0, 0.5), pl3)
+dotplot("4c", rdk(c("high", "low"), d4c), bquote(CD56^br+Tconv), lhl, c(0, 0.5), pl3)
 
-dotplot("4d",
-        rbind(data.frame(type="high", kill=d4d$gm1),
-              data.frame(type="low", kill=d4d$gm2)),
-        bquote(CD56^br+Treg), lhl, c(0, 0.5), pl3)
+dotplot("4d", rdk(c("high", "low"), d4d), bquote(CD56^br+Treg), lhl, c(0, 0.5), pl3)
 
-dotplot("4e",
-        rbind(data.frame(type="high", kill=d4e$gm1),
-              data.frame(type="low", kill=d4e$gm2)),
-        bquote(CD56^dim+Tconv), lhl, c(0, 0.5), pl3)
+dotplot("4e", rdk(c("high", "low"), d4e), bquote(CD56^dim+Tconv), lhl, c(0, 0.5), pl3)
 
-dotplot("4f",
-        rbind(data.frame(type="high", kill=d4f$gm1),
-              data.frame(type="low", kill=d4f$gm2)),
-        bquote(CD56^dim+Treg), lhl, c(0, 0.5), pl3)
+dotplot("4f", rdk(c("high", "low"), d4f), bquote(CD56^dim+Treg), lhl, c(0, 0.5), pl3)

@@ -9,7 +9,7 @@
       {
         devShell.x86_64-linux = pkgs.mkShell {
           packages = with pkgs; [
-            (rWrapper.override { packages = with rPackages; [ broom purrr ggplot2 ggdist MKinfer betareg rstanarm ]; })
+            (rWrapper.override { packages = with rPackages; [ tidyverse broom ggdist MKinfer betareg rstanarm ]; })
           ];
         };
       };

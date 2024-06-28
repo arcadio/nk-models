@@ -1,7 +1,7 @@
 # Bayesian beta regression.
 
 library(rstanarm)
-library(purrr)
+library(tidyverse)
 source("data.r")
 
 options(mc.cores=parallel::detectCores())
