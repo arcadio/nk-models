@@ -10,13 +10,14 @@ Alternatively, R and R packages listed in [[file:flake.nix][flake.nix]].
 
 * Usage
 
-Clone this repository and visit the resulting directory. Download and
-decompress pre-processed data inside the repository, creating a ~dat/~
-subdirectory. Fetch compressed data from the [[https://github.com/arcadio/nk-models/releases/latest/download/dat.tar.gz][latest release]].
+1. Run ~nix develop~. This instantiates an ephemeral environment that
+   contains R and all required R packages.
 
-Start a Nix shell with ~nix develop~. This instantiates an ephemeral
-shell with R and all required R packages. Run ~bash make.sh~. Figures
-created in ~tmp/~ should match those in the article.
+2. Run ~bash make.sh~. This downloads processed data and performs
+   statistical inference.
+
+After execution, figures created inside the ~tmp~ subdirectory should
+reproduce those in the article.
 
 * License
 
