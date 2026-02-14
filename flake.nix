@@ -7,7 +7,7 @@
     let pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in
       {
-        devShell.x86_64-linux = pkgs.mkShell {
+        devShells.x86_64-linux.default = pkgs.mkShell {
           packages = with pkgs; [
             curl
             (rWrapper.override { packages = with rPackages; [ tidyverse broom ggdist MKinfer betareg rstanarm ]; })
