@@ -1,8 +1,6 @@
-Bayesian models used in CD56^{bright} natural killer cells
-preferentially kill proliferating CD4^{+} T cells, /Discovery
-Immunology/, 2(1), 2023, [[https://doi.org/10.1093/discim/kyad012][doi:10.1093/discim/kyad012]]. Using flow
-cytometry data from a co-culture assay, these models demonstrate the
-immunoregulatory role of CD56^{bright} natural killer cells.
+CD56^{bright} natural killer cells preferentially kill proliferating
+CD4^{+} T cells, /Discovery Immunology/, 2(1), 2023,
+[[https://doi.org/10.1093/discim/kyad012][doi:10.1093/discim/kyad012]].
 
 * Dependencies
 
@@ -18,8 +16,22 @@ Alternatively, all packages listed in [[file:flake.nix][flake.nix]].
 2. Run ~bash make.sh~. This downloads processed data and performs
    statistical inference.
 
-Figures generated within the ~tmp~ subdirectory will reproduce the
-results presented in the article bit-by-bit.
+The results presented in the article will be reproduced as figures
+within the ~tmp~ subdirectory.
+
+* Design
+
+- Co-culture assay :: For each donor, activated CD4^{+} T conventional
+  and regulatory subsets were cultured standalone, as well as with
+  CD56^{bright} and CD56^{dim} NK cells. Flow cytometry measured
+  specific cell death, further stratified by a proliferation dye, see
+  [[https://github.com/arcadio/nk-models/releases/latest/download/design.pdf][design diagram]].
+
+- Bayesian inference :: ~betabay.r~ adjusts for spontaneous death to
+  calculate donor-specific kill rates. A Bayesian beta regression then
+  estimates overall killing efficiency, using fixed effects to control
+  for donor variability. Posterior distributions, 95% credible
+  intervals, and fold changes between subsets are reported.
 
 * License
 
