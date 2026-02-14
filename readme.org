@@ -1,6 +1,8 @@
-Bayesian models used in CD56bright natural killer cells preferentially
-kill proliferating CD4+ T cells, /Discovery Immunology/, 2(1), 2023,
-[[https://doi.org/10.1093/discim/kyad012][doi:10.1093/discim/kyad012]].
+Bayesian models used in CD56^{bright} natural killer cells
+preferentially kill proliferating CD4^{+} T cells, /Discovery
+Immunology/, 2(1), 2023, [[https://doi.org/10.1093/discim/kyad012][doi:10.1093/discim/kyad012]]. Using flow
+cytometry data from a co-culture assay, these models demonstrate the
+immunoregulatory role of CD56^{bright} natural killer cells.
 
 * Dependencies
 
@@ -16,8 +18,8 @@ Alternatively, all packages listed in [[file:flake.nix][flake.nix]].
 2. Run ~bash make.sh~. This downloads processed data and performs
    statistical inference.
 
-After execution, figures created inside the ~tmp~ subdirectory should
-reproduce those in the article.
+Figures generated within the ~tmp~ subdirectory will reproduce the
+results presented in the article bit-by-bit.
 
 * License
 
