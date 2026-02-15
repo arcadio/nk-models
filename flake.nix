@@ -11,6 +11,7 @@
           packages = with pkgs; [
             curl
             (rWrapper.override { packages = with rPackages; [ tidyverse broom ggdist MKinfer betareg rstanarm ]; })
+            texlive.combined.scheme-small
           ];
         };
       };
