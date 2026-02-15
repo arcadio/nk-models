@@ -6,6 +6,6 @@ SRC='https://github.com/arcadio/nk-models/releases/latest/download/dat.tar.gz'
 curl -L $SRC | tar -xzf -
 mkdir -p tmp
 
-Rscript hypothesis.r
-Rscript betareg.r
-Rscript betabay.r
+Rscript src/hypothesis.r > tmp/hypothesis.log
+Rscript src/betareg.r > tmp/betareg.log
+Rscript src/betabay.r > tmp/betabay.log

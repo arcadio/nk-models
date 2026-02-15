@@ -2,7 +2,7 @@
 
 library(rstanarm)
 library(tidyverse)
-source("data.r")
+source("src/data.r")
 
 options(mc.cores=parallel::detectCores())
 
@@ -58,5 +58,4 @@ rownames(res) <- c("2b(a)", "2b(b)", "2c(tcnv)", "2c(treg)", "2c(all)",
                    "4c", "4d", "4e", "4f")
 
 write.csv(res, file="tmp/res.csv")
-
-source("plot.r")
+source("src/plot.r")

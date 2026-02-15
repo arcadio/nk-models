@@ -1,7 +1,9 @@
 *
 !.gitignore
-!readme.org
 !flake.*
+!readme.org
 !*.sh
-!*.r
 !*.tex
+!*.r
+!doc/
+!src/

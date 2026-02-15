@@ -2,7 +2,7 @@
 # not used in the manuscript.
 
 library(betareg)
-source("data.r")
+source("src/data.r")
 
 meap <- function(p, d, b, t) mean(p[d[[t]] == b]) - mean(p[d[[t]] != b])
 

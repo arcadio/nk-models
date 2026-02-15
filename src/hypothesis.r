@@ -5,7 +5,7 @@
 library(broom)
 library(MKinfer)
 library(betareg)
-source("data.r")
+source("src/data.r")
 
 dat <- read("4c")
 hig <- dat[dat$type == "high",]
